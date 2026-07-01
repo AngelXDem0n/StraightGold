@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎨 Math Quiz + Password Portal</title>
+  <style>
+    /* --- Reset & Base --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      background: linear-gradient(145deg, #0b0c2a 0%, #1a1b4b 40%, #2d2f7e 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* --- Animated background decorations --- */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      animation: float 12s infinite alternate ease-in-out;
+      z-index: 0;
+    }
+    .orb1 {
+      width: 400px;
+      height: 400px;
+      background: #ff6b9d;
+      top: -10%;
+      left: -5%;
+      animation-duration: 14s;
+    }
+    .orb2 {
+      width: 350px;
+      height: 350px;
+      background: #f9d976;
+      bottom: -8%;
+      right: -5%;
+      animation-duration: 18s;
+      animation-delay: -4s;
+    }
+    .orb3 {
+      width: 280px;
+      height: 280px;
+      background: #6dd5ed;
+      top: 50%;
+      left: 70%;
+      animation-duration: 16s;
+      animation-delay: -8s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -60px) scale(1.2); }
+    }
+
+    /* --- Main card container --- */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 48px;
+      padding: 40px 35px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: scale(1.01);
+    }
+
+    /* --- Headings & text --- */
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffd166, #ff9e5e, #f46b8b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px rgba(255, 159, 67, 0.3);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .subhead {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      font-weight: 300;
+      margin-bottom: 30px;
+      border-left: 4px solid #f9d976;
+      padding-left: 16px;
+    }
+
+    /* --- Password section --- */
+    .password-section {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 28px;
+      padding: 24px 28px;
+      margin-bottom: 35px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 15px;
+      transition: border-color 0.3s;
+    }
+
+    .password-section:focus-within {
+      border-color: #ffd166;
+      box-shadow: 0 0 20px rgba(255, 209, 102, 0.15);
+    }
+
+    .password-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.1rem;
+      flex: 1 0 100%;
+    }
+
+    .password-label svg {
+      width: 24px;
+      height: 24px;
+      fill: #ffd166;
+    }
+
+    .password-input-group {
+      display: flex;
+      flex: 1 1 300px;
+      gap: 12px;
+    }
+
+    #passwordInput {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 40px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      font-size: 1.1rem;
+      outline: 2px solid transparent;
+      transition: all 0.3s;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    #passwordInput::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    #passwordInput:focus {
+      outline: 2px solid #ffd166;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .btn {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 40px;
+      background: linear-gradient(135deg, #ffd166, #f9a76b);
+      color: #1a1b4b;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 18px rgba(255, 209, 102, 0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(255, 209, 102, 0.5);
+      background: linear-gradient(135deg, #ffe066, #f9b87a);
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      box-shadow: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* --- Quiz section --- */
+    .quiz-section {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 28px;
+      padding: 24px 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .quiz-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .quiz-title span {
+      background: #ffd166;
+      color: #1a1b4b;
+      border-radius: 40px;
+      padding: 2px 16px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .question {
+      margin-bottom: 22px;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 20px;
+      border-left: 4px solid #6dd5ed;
+      transition: background 0.2s;
+    }
+
+    .question:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .question p {
+      color: #f0f0ff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .question input {
+      padding: 10px 16px;
+      border-radius: 30px;
+      border: none;
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      font-size: 1rem;
+      width: 140px;
+      outline: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .question input:focus {
+      outline: 2px solid #6dd5ed;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .question .feedback {
+      display: inline-block;
+      margin-left: 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #ffd166;
+    }
+
+    .question .feedback.correct {
+      color: #6fcf97;
+    }
+
+    .question .feedback.wrong {
+      color: #f28b82;
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    /* --- footer --- */
+    .footer-note {
+      margin-top: 28px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 600px) {
+      .container {
+        padding: 24px 18px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      .password-input-group {
+        flex-direction: column;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .question input {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      .question .feedback {
+        margin-left: 0;
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative orbs -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- Main container -->
+  <div class="container">
+
+    <h1>
+      ✨ Math Portal
+      <span style="font-size:1.8rem; -webkit-text-fill-color: initial; color: #ffd166;">+</span>
+      🔐
+    </h1>
+    <div class="subhead">
+      Solve the quiz &amp; enter the secret password to unlock the main portal.
+    </div>
+
+    <!-- PASSWORD SECTION -->
+    <div class="password-section">
+      <div class="password-label">
+        <svg viewBox="0 0 24 24" width="24" height="24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+        Enter password to redirect:
+      </div>
+      <div class="password-input-group">
+        <input type="password" id="passwordInput" placeholder="Type the secret code…" />
+        <button class="btn" id="unlockBtn">🔓 Unlock</button>
+      </div>
+    </div>
+
+    <!-- MATH QUIZ SECTION -->
+    <div class="quiz-section">
+      <div class="quiz-title">
+        📐 Math Quiz
+        <span>4 questions</span>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question" data-answer="4">
+        <p>1. What is 2 + 2 ?</p>
+        <input type="number" class="quiz-input" placeholder="Your answer" />
+        <span class="feedback"></span>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question" data-answer="15">
+        <p>2. 5 × 3 = ?</p>
+        <input type="number" class="quiz-input" placeholder="Your answer" />
+        <span class="feedback"></span>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question" data-answer="12">
+        <p>3. 24 ÷ 2 = ?</p>
+        <input type="number" class="quiz-input" placeholder="Your answer" />
+        <span class="feedback"></span>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question" data-answer="7">
+        <p>4. 10 − 3 = ?</p>
+        <input type="number" class="quiz-input" placeholder="Your answer" />
+        <span class="feedback"></span>
+      </div>
+
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" id="checkQuizBtn">✅ Check answers</button>
+        <button class="btn btn-secondary" id="resetQuizBtn">🔄 Reset</button>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      ⚡ Hint: The password is the year of the future.
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // --- PASSWORD REDIRECT ---
+      const passwordInput = document.getElementById('passwordInput');
+      const unlockBtn = document.getElementById('unlockBtn');
+
+      function redirect() {
+        const entered = passwordInput.value.trim();
+        if (entered === '2026') {
+          window.location.href = 'https://moe-portal.rodrickgatsy.workers.dev/main';
+        } else {
+          alert('❌ Incorrect password. Try again!');
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      }
+
+      unlockBtn.addEventListener('click', redirect);
+      passwordInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          redirect();
+        }
+      });
+
+      // --- MATH QUIZ ---
+      const questions = document.querySelectorAll('.question');
+      const checkBtn = document.getElementById('checkQuizBtn');
+      const resetBtn = document.getElementById('resetQuizBtn');
+
+      function checkQuiz() {
+        let allCorrect = true;
+        questions.forEach((q) => {
+          const input = q.querySelector('.quiz-input');
+          const feedback = q.querySelector('.feedback');
+          const answer = parseFloat(q.getAttribute('data-answer'));
+          const userAnswer = parseFloat(input.value.trim());
+
+          if (isNaN(userAnswer)) {
+            feedback.textContent = '⚠️ Enter a number';
+            feedback.className = 'feedback wrong';
+            allCorrect = false;
+            return;
+          }
+
+          if (userAnswer === answer) {
+            feedback.textContent = '✅ Correct!';
+            feedback.className = 'feedback correct';
+          } else {
+            feedback.textContent = `❌ Wrong (answer is ${answer})`;
+            feedback.className = 'feedback wrong';
+            allCorrect = false;
+          }
+        });
+
+        if (allCorrect) {
+          // Optional: extra celebration
+          // You could also auto-fill the password? But we'll just show a message.
+          setTimeout(() => {
+            alert('🎉 All answers correct! Now enter the password "2026" above to continue.');
+          }, 100);
+        }
+      }
+
+      function resetQuiz() {
+        questions.forEach((q) => {
+          const input = q.querySelector('.quiz-input');
+          const feedback = q.querySelector('.feedback');
+          input.value = '';
+          feedback.textContent = '';
+          feedback.className = 'feedback';
+        });
+      }
+
+      checkBtn.addEventListener('click', checkQuiz);
+      resetBtn.addEventListener('click', resetQuiz);
+
+      // Allow Enter key on quiz inputs to trigger check
+      document.querySelectorAll('.quiz-input').forEach((inp) => {
+        inp.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            checkQuiz();
+          }
+        });
+      });
+
+    })();
+  </script>
+</body>
+</html>
