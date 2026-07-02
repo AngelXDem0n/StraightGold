@@ -525,7 +525,7 @@
             <!-- Hero -->
             <section class="hero-banner reveal">
                 <span class="hero-badge">🔥 FOR SALE</span>
-                <div class="price-tag">$50 SGD</div>
+                <div class="price-tag">$15 SGD</div>
                 <p class="price-sub">One-time payment · Full source code · Lifetime ownership</p>
                 <p style="margin-top:8px;color:var(--text-secondary);font-size:0.95rem;">A complete gaming portal with advanced features – ready to deploy.</p>
                 <a href="#contactSection" class="cta-btn">💰 BUY NOW</a>
@@ -581,7 +581,7 @@
             <!-- Fine Print -->
             <div class="fine-print reveal">
                 <p>⚠️ <strong>Note:</strong> Some games may experience bugs on small screens (PLD), occasional framerate drops, or touch‑input issues. The site is optimized for <strong>desktop browsers</strong>. Not all games are guaranteed to work on mobile or low‑end devices.</p>
-                <p style="margin-top:6px;">© 2024 NovaHub · Price: <strong>$50 SGD</strong> · All features described are part of the website you are purchasing.</p>
+                <p style="margin-top:6px;">© 2024 NovaHub · Price: <strong>$15 SGD</strong> · All features described are part of the website you are purchasing.</p>
             </div>
 
             <!-- Contact Section -->
@@ -595,13 +595,13 @@
                         📱 WhatsApp: +65 8822 3457
                     </a>
                 </div>
-                <p style="text-align:center;font-size:0.85rem;color:var(--text-secondary);margin-top:6px;">Click a button to connect – Discord opens friend request, WhatsApp opens chat. Price: <strong>$50 SGD</strong></p>
+                <p style="text-align:center;font-size:0.85rem;color:var(--text-secondary);margin-top:6px;">Click a button to connect – Discord opens friend request, WhatsApp opens chat. Price: <strong>$15 SGD</strong></p>
             </section>
         </div>
     </div>
 
     <script>
-        // ==================== LOADING ANIMATION ====================
+        // Loading animation
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loadingOverlay').classList.add('hidden');
@@ -610,7 +610,7 @@
             }, 1800);
         });
 
-        // ==================== PARTICLES ====================
+        // Particles
         const canvas = document.getElementById('particlesCanvas');
         const ctx = canvas.getContext('2d');
         let particlesArray = [];
@@ -698,12 +698,10 @@
         function initParticles() {
             resizeCanvas();
             initParticlesArray();
-            if (!animationId) {
-                animateParticles();
-            }
+            if (!animationId) animateParticles();
         }
 
-        // ==================== PANIC REDIRECT (demo feature) ====================
+        // Panic redirect
         function panicRedirect() {
             const overlay = document.createElement('div');
             overlay.style.cssText = 'position:fixed;inset:0;background:#ef4444;z-index:99999;opacity:0;transition:opacity 0.15s ease;pointer-events:none;';
@@ -714,7 +712,7 @@
             }, 250);
         }
 
-        // ==================== SCROLL REVEAL ====================
+        // Scroll reveal
         const revealElements = document.querySelectorAll('.reveal');
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
